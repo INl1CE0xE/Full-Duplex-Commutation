@@ -2,6 +2,61 @@
 
 # TCP Client/Server (WIP)
 
+## Description
+Multithreaded **TCP chat** in C++ with Winsock2. Supports **client** and **server** modes.
+
+**⚠️ STATUS: DOES NOT WORK**  
+Code contains critical bugs, under development.
+
+## Usage
+```bash
+# Server mode
+server.exe -s
+
+# Client mode (default)
+server.exe
+```
+
+## Project Files
+```
+.
+├── main.cpp          # Entry point, send/recv threads
+├── init.h            # Socket init (WSA, connect/bind/listen/accept)
+└── msg_send_recv.h   # Message send/recv (fgets/send/recv)
+```
+
+## Implemented Features
+- [x] WSAStartup 2.2
+- [x] TCP socket creation (AF_INET, port 8080, 127.0.0.1)
+- [x] **Client**: connect()
+- [x] **Server**: bind() + listen() + accept()
+- [x] Message buffers (1024 bytes)
+- [x] Multithreading: send_thread + recv_thread
+
+## 🚨 Critical Bugs (TODO)
+- ❌ `recv_msg`: `=` instead of `==` (assignment vs comparison)
+- ❌ **Server**: `accept()` blocks constructor
+- ❌ **Single `MSG_INIT`** object in both threads (race condition)
+- ❌ No destructor (socket leaks)
+- ❌ No graceful shutdown (Ctrl+C)
+
+## Build
+```bash
+g++ -std=c++17 main.cpp -lws2_32 -o server.exe -pthread
+# Visual Studio: add ws2_32.lib
+```
+
+## Planned Improvements
+- [ ] Fix MSG_INIT race condition
+- [ ] Move accept() out of constructor
+- [ ] Add mutex for thread safety
+- [ ] Ctrl+C handling
+- [ ] Error logging
+
+**Status: 40%**  
+**🚧 DO NOT USE 🚧** — work in progress!
+
+#Русский
 ## Описание
 Многопоточный **TCP чат** на C++ с Winsock2. Поддерживает **клиент** и **сервер** режимы.
 
